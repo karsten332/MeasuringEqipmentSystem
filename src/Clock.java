@@ -8,7 +8,7 @@ public class Clock extends Meter {
 
     public Clock(String registrationNumber, boolean state, String location,double timeInterval) {
         super(registrationNumber,state,location);
-        this.timeInterval = timeInterval;
+        setTimeInterval(timeInterval);
     }
 
     public double getTimeInterval() {
@@ -38,7 +38,5 @@ public class Clock extends Meter {
     public String toString() {        return super.toString() + "Clock{" +
                 "timeInterval=" + timeInterval +
                 '}';
-
-
     }
 }

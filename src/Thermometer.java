@@ -1,4 +1,3 @@
-import java.util.Objects;
 
 public class Thermometer extends Meter {
     private double minTemperature;
@@ -38,7 +37,6 @@ public class Thermometer extends Meter {
 
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,9 +49,11 @@ public class Thermometer extends Meter {
 
     @Override
     public String toString() {
-        return "Thermometer{" +
+        return super.toString() + "Thermometer{" +
                 "minTemperature=" + minTemperature +
                 ", maxTemperature=" + maxTemperature +
                 '}';
     }
 }
+
+

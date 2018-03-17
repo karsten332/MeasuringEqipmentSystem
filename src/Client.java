@@ -1,4 +1,7 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.sql.SQLOutput;
 import java.util.*;
 /**
  * Write a description of class Client here.
@@ -9,8 +12,11 @@ import java.util.*;
 public class Client
 {
     private  MeterArchive meterArchive;
-    private ReadFile reader;
+
     private Scanner sn;
+    private Populate pop;
+
+
 
 
     public Client(){
@@ -21,6 +27,10 @@ public class Client
    try{
        Client obj = new Client();
        obj.mainMethod();
+
+
+
+
    }
    catch (Exception e) {
        e.printStackTrace();
@@ -30,8 +40,10 @@ public class Client
 
     public void mainMethod() {
         meterArchive = new MeterArchive();
-        reader = new ReadFile();
+        pop = new Populate();
         sn = new Scanner(System.in);
+
+        pop.populate(meterArchive);
         populate();
         Welcome();
         clientResponse();
@@ -40,7 +52,6 @@ public class Client
     /**
      * Gives basic information to user as String.
      */
-
 
     public void Welcome(){
         System.out.println("Welcome to Measuring equipment System");
@@ -90,9 +101,6 @@ public class Client
                     meterArchive.setRegistrationNumber(registrationNumber,newRegistrationNumber);
                     System.out.println("Done!");
                     break;
-                case "read" : System.out.println("Enter filename .txt"); // C:\Users\sankar17\IdeaProjects\MeasuringEquipmentSystem\src\text.txt
-                    reader.readFile(sn.nextLine());
-                    break;
                 case "finished" : finished = true;
                     break;
                 case "f" : finished = true;
@@ -122,6 +130,7 @@ public class Client
         Clock c2 = new Clock("2",true,"A2",60.00);
         Thermometer t1 = new Thermometer("3",false,"A3",0,400);
         Weight w1 = new Weight("4",true,"A4",0,100);
+
         meterArchive.add(c1);
         meterArchive.add(c2);
         meterArchive.add(t1);
@@ -181,7 +190,6 @@ public class Client
                     break;
             case "thermometer":   Double minTemperature = null; Double maxTemperature = null; double minTemperatureCheck = -200; double maxTemperatureCheck = 1000;     double test;
                 System.out.println("What is the lowest temperature?");
-
 
                 while(minTemperature == null){
                     try {

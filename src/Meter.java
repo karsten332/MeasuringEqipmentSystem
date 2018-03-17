@@ -76,9 +76,4 @@ public abstract class Meter {
                 Objects.equals(getLocation(), meter.getLocation());
     }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(getRegistrationNumber(), isState(), getLocation());
-    }
 }

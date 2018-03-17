@@ -1,4 +1,3 @@
-import java.util.Objects;
 
 public class Weight extends Meter {
     private double minWeight;
