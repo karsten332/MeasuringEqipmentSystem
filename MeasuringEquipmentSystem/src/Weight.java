@@ -32,8 +32,8 @@ public class Weight extends Meter {
     public void display(){
         System.out.println("Weight");
         super.display();
-        System.out.println("Max Weight: " + getMaxWeight());
-        System.out.println("Min Weight: " + getMinWeight());
+        System.out.println("Max Weight: " + getMaxWeight() + "kg");
+        System.out.println("Min Weight: " + getMinWeight() + "kg");
     }
 
 

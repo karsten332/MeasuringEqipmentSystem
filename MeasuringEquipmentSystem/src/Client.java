@@ -1,7 +1,5 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.sql.SQLOutput;
+
 import java.util.*;
 /**
  * Write a description of class Client here.
@@ -17,8 +15,6 @@ public class Client
     private Populate pop;
 
 
-
-
     public Client(){
 
     }
@@ -27,9 +23,6 @@ public class Client
    try{
        Client obj = new Client();
        obj.mainMethod();
-
-
-
 
    }
    catch (Exception e) {
@@ -45,10 +38,27 @@ public class Client
 
         pop.populate(meterArchive);
         populate();
+        System.out.println("Change the state of clock with registration number 2 to broken");
+        meterArchive.setMeterBroken("2");
+        System.out.println("Change the clock with registration number 3 to registration number 20");
+        meterArchive.setRegistrationNumber(
+                "3","20");
+        System.out.println("Remove weight with registration number 5");
+        meterArchive.remove("5");
+        System.out.println("This is now the list:");
+        meterArchive.show();
+
+        System.out.println("Get meter with registration number 20");
+        meterArchive.getMeter("20").display();
+
+
         Welcome();
         clientResponse();
     }
-
+    Clock c1 = new Clock("2",true,"A1",60.00);
+    Clock c2 = new Clock("3",true,"A2",60.00);
+    Thermometer t1 = new Thermometer("4",false,"A3",0,400);
+    Weight w1 = new Weight("5",true,"A4",0,100);
     /**
      * Gives basic information to user as String.
      */
@@ -75,30 +85,35 @@ public class Client
                     break;
                 case "create" :sn.reset(); create();
                     break;
-                case "get":
+                case "get": // legg til check om objekt eksistere
                     System.out.println("Enter registration number");
                     String n = sn.nextLine();
                     getMeter(n);
                     break;
                 case "help" : help();
                     break;
-                case "remove" :
+                case "remove" : // legg til check om objekt eksistere
                     System.out.println("Enter registration number");
                     String r = sn.nextLine();
+                    System.out.println("Removing");
+                    getMeter(r);
                     meterArchive.remove(r);
+                    System.out.println("Done!");
                     break;
-                case "meterbroken" :
+                case "meterbroken" : // legg til check om objekt eksistere
                     System.out.println("Enter registration number");
                     String number = sn.nextLine();
                     meterArchive.setMeterBroken(number);
+                    getMeter(number);
                     System.out.println("Done!");
                     break;
-                case "setnewreg" :
+                case "setnewreg" : // legg til check om objekt eksistere
                     System.out.println("Enter registration number");
                     String registrationNumber = sn.nextLine();
                     System.out.println("Enter new registration number");
                     String newRegistrationNumber = sn.nextLine();
                     meterArchive.setRegistrationNumber(registrationNumber,newRegistrationNumber);
+                    getMeter(newRegistrationNumber);
                     System.out.println("Done!");
                     break;
                 case "finished" : finished = true;
@@ -118,18 +133,19 @@ public class Client
         System.out.println("Type \"get\" to see an specific stored item.");
         System.out.println("Type \"remove\" to delete a stored object in the list.");
         System.out.println("Type \"setnewreg\" to change a registration number.");
+        System.out.println("Type \"create\" to create a new meter");
         System.out.println("Type \"meterbroken\" to change a item from good to broken.");
-        System.out.println("Type \"finished or f\" to end program and show all the equipment.");
+        System.out.println("Type \"finished or \"f\" to end program and show all the equipment.");
     }
 
     /**
      * Puts meters into the meterArchives ArrayList
      */
     public void populate(){
-        Clock c1 = new Clock("1",true,"A1",60.00);
-        Clock c2 = new Clock("2",true,"A2",60.00);
-        Thermometer t1 = new Thermometer("3",false,"A3",0,400);
-        Weight w1 = new Weight("4",true,"A4",0,100);
+        Clock c1 = new Clock("2",true,"A1",60.00);
+        Clock c2 = new Clock("3",true,"A2",60.00);
+        Thermometer t1 = new Thermometer("4",false,"A3",0,400);
+        Weight w1 = new Weight("5",true,"A4",0,100);
 
         meterArchive.add(c1);
         meterArchive.add(c2);
@@ -149,15 +165,30 @@ public class Client
      */
 
     public void create() {
-        String regNumber;
+        String regNumber = null;
+        String regNumberTest;
         Boolean state = null;
         String status;
         String location;
-        String type;
+        String type = null;
+        String typeTest;
         Meter name;
 
         System.out.println("What is the registration number?");
-        regNumber = sn.nextLine();
+        regNumberTest = sn.nextLine();
+
+        while (regNumber == null){
+            if (meterArchive.checkRegistrationNumber(regNumberTest) == false){
+                System.out.println( regNumberTest + " is already in use please chose a different one");
+                regNumberTest = sn.nextLine();
+            }
+            else{
+                regNumber = regNumberTest;
+            }
+
+        }
+
+
         System.out.println("What is the state? G/B");
         while (state == null) {
             status = sn.nextLine().toLowerCase().trim();
@@ -173,8 +204,19 @@ public class Client
         System.out.println("Where can you find it?");
         location = sn.nextLine().toLowerCase().trim();
         System.out.println("What type is it? (clock,weight, thermometer)");
-        type = sn.nextLine().toLowerCase().trim();
+        typeTest = sn.nextLine().toLowerCase().trim();
+        boolean test3 = false;
+        while(!test3){
+            if(typeTest.equals("clock") || typeTest.equals("weight") || typeTest.equals("thermometer")){
+                type = typeTest;
+                test3 = true;
+            }
+            else{
+                System.out.println(typeTest + "is not a valid type. Please enter a valid type");
+                typeTest = sn.nextLine().toLowerCase().trim();
+            }
 
+        }
 
         switch (type){
                case "clock": double timeInterval = 0;
@@ -188,8 +230,10 @@ public class Client
                    meterArchive.add(name);
                    sn.nextLine();
                     break;
-            case "thermometer":   Double minTemperature = null; Double maxTemperature = null; double minTemperatureCheck = -200; double maxTemperatureCheck = 1000;     double test;
-                System.out.println("What is the lowest temperature?");
+
+            case "thermometer": Double minTemperature = null; Double maxTemperature = null; double minTemperatureCheck = -200; double maxTemperatureCheck = 1000;     double test;
+
+            System.out.println("What is the lowest temperature?");
 
                 while(minTemperature == null){
                     try {
@@ -205,7 +249,7 @@ public class Client
                         System.out.println("minimum temperature must be more than or equal " + minTemperatureCheck);
                     }
                 }
-                System.out.println("What is the highest temperature?"); // legge til feisjekk slik den er horer enn null og hoyere enn loweest
+                System.out.println("What is the highest temperature?");
 
                 while (maxTemperature == null){
                     try{
@@ -214,7 +258,7 @@ public class Client
                             maxTemperature = test;
                      }
                      else {
-                         System.out.println("maximum temperature must be more than minimum temperature and lower than " + maxTemperatureCheck);
+                         System.out.println("Maximum temperature must be more than minimum temperature and lower than " + maxTemperatureCheck);
                       }
                     }
                     catch (NumberFormatException e){
@@ -224,21 +268,21 @@ public class Client
                 name = new Thermometer(regNumber,state,location,minTemperature,maxTemperature);
                 meterArchive.add(name);
                 break;
-            case "weight" : Double minWeight = null; Double maxWeight = null; double minWeightCheck = 0; double maxWeightCheck = 1000; double testWeight;
+                case "weight" : Double minWeight = null; Double maxWeight = null; double minWeightCheck = 0; double maxWeightCheck = 1000; double testWeight;
                 System.out.println("What is the minimum weight?");
 
                 while(minWeight == null){
                     try{
                         testWeight = Double.parseDouble(sn.next());
-                        if (testWeight >= minWeightCheck){
+                        if (testWeight >= minWeightCheck && testWeight <  maxWeightCheck){
                             minWeight = testWeight;
                         }
                         else {
-                            System.out.println("minimum weight must be more than or equal " + minWeightCheck);
+                            System.out.println("minimum weight must be more than or equal " + minWeightCheck + " and less than " +  maxWeightCheck);
                         }
                     }
                     catch (NumberFormatException e){
-                        System.out.println("minimum weight must be more than or equal 0");
+                        System.out.println("minimum weight must be more than or equal 0 ");
                     }
                 }
 

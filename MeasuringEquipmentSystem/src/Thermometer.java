@@ -32,8 +32,8 @@ public class Thermometer extends Meter {
     public void display(){
         System.out.println("Thermometer");
         super.display();
-        System.out.println("Max Temperature: " + getMaxTemperature());
-        System.out.println("Min Temperature: " + getMinTemperature());
+        System.out.println("Max Temperature: " + getMaxTemperature() +"°C");
+        System.out.println("Min Temperature: " + getMinTemperature() + "°C");
 
     }
 

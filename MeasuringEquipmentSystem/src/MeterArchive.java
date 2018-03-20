@@ -32,6 +32,22 @@ public class MeterArchive {
     }
 
     /**
+     * Checks if the registration number is already in use.
+     * Make sure that two objects can't have the same  registration number.
+     * @param regNumber
+     * @return true/false
+     */
+    public boolean checkRegistrationNumber(String regNumber){
+        for (int i = 0; i <content.size(); i++){
+            if (content.get(i).getRegistrationNumber().equals(regNumber)){
+                return false;
+            }
+
+        }
+        return true;
+    }
+
+    /**
      * Change the registration number to new registration number.
      * @param registrationNumber String of current registration number
      * @param newRegistrationNumber String of new registration number
