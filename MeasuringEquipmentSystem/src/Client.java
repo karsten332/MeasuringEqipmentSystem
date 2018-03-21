@@ -130,7 +130,7 @@ public class Client
         System.out.println("Type \"show\" to see all the equipment stored.");
         System.out.println("Type \"get\" to see an specific stored item.");
         System.out.println("Type \"remove\" to delete a stored object in the list.");
-        System.out.println("Type \"setnewlocation\" to change a registration number.");
+        System.out.println("Type \"setnewlocation\" to change location.");
         System.out.println("Type \"create\" to create a new meter");
         System.out.println("Type \"meterbroken\" to change a item from good to broken.");
         System.out.println("Type \"finished or \"f\" to end program and show all the equipment.");
