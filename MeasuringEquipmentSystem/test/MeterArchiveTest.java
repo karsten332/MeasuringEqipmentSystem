@@ -54,7 +54,7 @@ class MeterArchiveTest {
         meterArchive.add(t1);
         meterArchive.add(w1);
 
-        meterArchive.setRegistrationNumber(registrationNumber,newRegistrationNumber);
+        meterArchive.setLocationNumber(registrationNumber,newRegistrationNumber);
 
         assertEquals("6",c2.getRegistrationNumber());
 

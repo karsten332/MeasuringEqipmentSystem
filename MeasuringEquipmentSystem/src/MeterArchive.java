@@ -48,15 +48,15 @@ public class MeterArchive {
     }
 
     /**
-     * Change the registration number to new registration number.
+     * Change the location of a meter
      * @param registrationNumber String of current registration number
-     * @param newRegistrationNumber String of new registration number
+     * @param newLocation String of new registration number
      * @return true/false
      */
-    public boolean setRegistrationNumber(String registrationNumber, String newRegistrationNumber){
+    public boolean setLocationNumber(String registrationNumber, String newLocation){
         for(int i=0; i <content.size(); i++){
             if(content.get(i).getRegistrationNumber().equals(registrationNumber)){
-                content.get(i).setRegistrationNumber(newRegistrationNumber);
+                content.get(i).setLocation(newLocation);
 
                 return true;
             }
@@ -64,6 +64,7 @@ public class MeterArchive {
         return false;
     }
 
+        // legg til location set endring
     /**
      *  Change the meter from good to broken
      * @param registrationNumber
@@ -87,6 +88,7 @@ public class MeterArchive {
         for(Meter meter : content){
             meter.display();
             System.out.println();
+
         }
     }
 

@@ -2,7 +2,7 @@
 
 import java.util.*;
 /**
- * Write a description of class Client here.
+ * Write a description of class Client3
  *
  * @author (your name)
  * @version (a version number or a date)
@@ -40,16 +40,14 @@ public class Client
         populate();
         System.out.println("Change the state of clock with registration number 2 to broken");
         meterArchive.setMeterBroken("2");
-        System.out.println("Change the clock with registration number 3 to registration number 20");
-        meterArchive.setRegistrationNumber(
-                "3","20");
+        System.out.println("Change the clock with registration number 3 location to A40");
+        meterArchive.setLocationNumber("3","A40");
         System.out.println("Remove weight with registration number 5");
         meterArchive.remove("5");
         System.out.println("This is now the list:");
         meterArchive.show();
-
-        System.out.println("Get meter with registration number 20");
-        meterArchive.getMeter("20").display();
+        System.out.println("Get meter with registration number 3");
+        meterArchive.getMeter("3").display();
 
 
         Welcome();
@@ -85,14 +83,14 @@ public class Client
                     break;
                 case "create" :sn.reset(); create();
                     break;
-                case "get": // legg til check om objekt eksistere
+                case "get":
                     System.out.println("Enter registration number");
                     String n = sn.nextLine();
                     getMeter(n);
                     break;
                 case "help" : help();
                     break;
-                case "remove" : // legg til check om objekt eksistere
+                case "remove" :
                     System.out.println("Enter registration number");
                     String r = sn.nextLine();
                     System.out.println("Removing");
@@ -100,20 +98,20 @@ public class Client
                     meterArchive.remove(r);
                     System.out.println("Done!");
                     break;
-                case "meterbroken" : // legg til check om objekt eksistere
+                case "meterbroken" :
                     System.out.println("Enter registration number");
                     String number = sn.nextLine();
                     meterArchive.setMeterBroken(number);
                     getMeter(number);
                     System.out.println("Done!");
                     break;
-                case "setnewreg" : // legg til check om objekt eksistere
+                case "setnewlocation" :
                     System.out.println("Enter registration number");
                     String registrationNumber = sn.nextLine();
-                    System.out.println("Enter new registration number");
-                    String newRegistrationNumber = sn.nextLine();
-                    meterArchive.setRegistrationNumber(registrationNumber,newRegistrationNumber);
-                    getMeter(newRegistrationNumber);
+                    System.out.println("Enter new location");
+                    String newLocation = sn.nextLine();
+                    meterArchive.setLocationNumber(registrationNumber,newLocation);
+                    getMeter(registrationNumber);
                     System.out.println("Done!");
                     break;
                 case "finished" : finished = true;
@@ -132,7 +130,7 @@ public class Client
         System.out.println("Type \"show\" to see all the equipment stored.");
         System.out.println("Type \"get\" to see an specific stored item.");
         System.out.println("Type \"remove\" to delete a stored object in the list.");
-        System.out.println("Type \"setnewreg\" to change a registration number.");
+        System.out.println("Type \"setnewlocation\" to change a registration number.");
         System.out.println("Type \"create\" to create a new meter");
         System.out.println("Type \"meterbroken\" to change a item from good to broken.");
         System.out.println("Type \"finished or \"f\" to end program and show all the equipment.");
